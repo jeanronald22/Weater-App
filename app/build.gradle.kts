@@ -44,6 +44,9 @@ android {
 }
 
 dependencies {
+	implementation(libs.retrofit)
+	implementation("com.google.code.gson:gson:2.13.2")
+	implementation("androidx.room:room-runtime:2.8.4")
 	implementation(libs.hilt.android)
 	kapt(libs.hilt.compiler)
 	implementation(libs.androidx.hilt.navigation.compose)
