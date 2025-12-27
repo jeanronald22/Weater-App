@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WeaterApp</string>
+    <string name="m_t_o">Météo</string>
 </resources>

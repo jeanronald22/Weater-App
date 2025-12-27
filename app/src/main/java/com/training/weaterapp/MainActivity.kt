@@ -1,16 +1,21 @@
 package com.training.weaterapp
 
+import android.app.StatusBarManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.training.weaterapp.ui.screens.Home
 import com.training.weaterapp.ui.theme.WeaterAppTheme
 import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +28,7 @@ class MainActivity : ComponentActivity() {
 		setContent {
 			WeaterAppTheme {
 				Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
+					Home(modifier = Modifier.padding(innerPadding))
 				}
 			}
 		}
