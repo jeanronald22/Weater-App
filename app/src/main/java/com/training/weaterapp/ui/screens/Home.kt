@@ -1,6 +1,9 @@
 package com.training.weaterapp.ui.screens
 
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +22,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -27,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.training.weaterapp.R
+import com.training.weaterapp.components.EmptyList
 import com.training.weaterapp.components.Loader
 import com.training.weaterapp.components.city.CityCard
 import com.training.weaterapp.ui.viewModel.HomViewModel
@@ -38,33 +43,27 @@ fun Home(
 	modifier: Modifier = Modifier,
 	viewModel: HomViewModel = hiltViewModel()
 ) {
-	remember { TextFieldState() }
 	val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-	val cities = viewModel.cities.collectAsState().value
-	val quey = viewModel.query.collectAsState()
+
+	val citiesState = viewModel.cities.collectAsState().value
+	val query = viewModel.query.collectAsState().value
 
 	Scaffold(
 		containerColor = MaterialTheme.colorScheme.background,
 		modifier = modifier,
 		topBar = {
 			MediumTopAppBar(
-
-				colors = TopAppBarColors(
-					containerColor = Color.Transparent,
-					scrolledContainerColor = Color.Transparent,
-					navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-					titleContentColor = MaterialTheme.colorScheme.onSurface,
-					actionIconContentColor = MaterialTheme.colorScheme.onSurface,
-				),
 				title = {
 					Text(
 						text = stringResource(R.string.m_t_o),
 						style = MaterialTheme.typography.headlineLarge,
-						fontWeight = FontWeight.SemiBold,
-						color = MaterialTheme.colorScheme.onBackground
+						fontWeight = FontWeight.SemiBold
 					)
 				},
-				actions = { Icon(Icons.Outlined.MoreVert, contentDescription = "Menu") },
+				colors = TopAppBarDefaults.mediumTopAppBarColors(
+					containerColor = MaterialTheme.colorScheme.background,
+					scrolledContainerColor = MaterialTheme.colorScheme.background
+				),
 				scrollBehavior = scrollBehavior
 			)
 		}
@@ -77,24 +76,35 @@ fun Home(
 				.fillMaxWidth()
 				.nestedScroll(scrollBehavior.nestedScrollConnection)
 		) {
-			stickyHeader {
-				Search(
-					query = quey.value,
-					onQueryChange = {query ->
-						viewModel.searchCity(query)},
-					modifier = Modifier
-						.fillMaxWidth()
-				)
-			}
-			item{
-				if(cities.isLoading){
-					Loader()
+				stickyHeader {
+					Search(
+						query = query,
+						onQueryChange = { viewModel.searchCity(it) },
+						modifier = Modifier
+							.fillMaxWidth()
+
+					)
+					Spacer(Modifier.padding(8.dp))
 				}
-			}
-			items(cities.data?:emptyList()) { city ->
-				CityCard(city)
+			when {
+				citiesState.isLoading -> item { Loader() }
+
+				citiesState.data.isNullOrEmpty() -> item {
+
+						EmptyList(
+							title = stringResource(R.string.aucune_ville_trouv_e),
+							subtitle = stringResource(R.string.essayez_une_autre_recherche),
+							modifier = Modifier.padding(top = 20.dp)
+						)
+
+				}
+
+				else -> items(citiesState.data!!) { city ->
+					CityCard(item = city)
+				}
 			}
 		}
 	}
 }
+
 

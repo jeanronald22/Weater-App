@@ -4,6 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,7 +25,7 @@ fun CityCard(
 	Card(
 		modifier = modifier
 			.fillMaxWidth()
-			.padding(horizontal = 12.dp, vertical = 6.dp)
+			.padding(vertical = 6.dp)
 			.clickable { onClick?.invoke() },
 		shape = RoundedCornerShape(14.dp),
 		colors = CardDefaults.cardColors(
@@ -36,20 +38,17 @@ fun CityCard(
 			horizontalArrangement = Arrangement.spacedBy(14.dp)
 		) {
 
-			// --- Flag avatar ---
 			AsyncImage(
 				model = "https://flagsapi.com/${item.countryCode ?: ""}/flat/64.png",
 				contentDescription = "${item.country} flag",
 				modifier = Modifier
 					.size(46.dp)
-					.clip(CircleShape)
 			)
 
 			Column(
 				modifier = Modifier.weight(1f)
 			) {
 
-				// --- City name ---
 				Text(
 					text = item.name,
 					style = MaterialTheme.typography.titleMedium,
@@ -58,22 +57,21 @@ fun CityCard(
 
 				Spacer(modifier = Modifier.height(4.dp))
 
-				// --- Country line ---
 				Text(
-					text = "${item.country} • ${item.admin1 ?: ""}",
+					text = "${item.country} • ${item.admin1 ?: item.admin2?:item.admin3?:item.admin4?:""}",
 					style = MaterialTheme.typography.bodyMedium,
 					color = MaterialTheme.colorScheme.onSurfaceVariant
 				)
 
 				Spacer(modifier = Modifier.height(2.dp))
 
-				// --- Coordinates ---
 				Text(
-					text = "Lat: ${item.latitude}, Lon: ${item.longitude}",
+					text = "${item.latitude}, ${item.longitude}",
 					style = MaterialTheme.typography.bodySmall,
 					color = MaterialTheme.colorScheme.outline
 				)
 			}
+			Icon(Icons.Default.FavoriteBorder, contentDescription = "", tint = MaterialTheme.colorScheme.outline)
 		}
 	}
 }

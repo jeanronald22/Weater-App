@@ -37,7 +37,7 @@ fun Search(
 	Column(modifier = modifier.fillMaxWidth()) {
 			Surface(
 				modifier = Modifier.fillMaxSize(),
-				color = MaterialTheme.colorScheme.surfaceVariant,
+				color = MaterialTheme.colorScheme.surfaceContainerLow,
 				shape = RoundedCornerShape(16.dp)
 			) {
 				Row(
@@ -58,8 +58,8 @@ fun Search(
 						onValueChange = onQueryChange,
 						singleLine = true,
 						modifier = Modifier.fillMaxWidth().fillMaxHeight(),
-						textStyle = TextStyle(color = MaterialTheme.colorScheme.primary),
-						cursorBrush = SolidColor(MaterialTheme.colorScheme.primary)
+						textStyle = TextStyle(color = MaterialTheme.colorScheme.outline),
+						cursorBrush = SolidColor(MaterialTheme.colorScheme.outline)
 					) { innerTextField ->
 						if (query.isEmpty()) {
 							Text(

@@ -27,7 +27,7 @@ class HomViewModel @Inject constructor(
 
 	fun searchCity(query: String) {
 		_query.value = query
-		_cities.update { it.copy(isLoading = false) }
+		_cities.update { it.copy(isLoading = true) }
 		viewModelScope.launch {
 			try {
 				val response = repository.getCities(query)
