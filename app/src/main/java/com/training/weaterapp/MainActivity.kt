@@ -14,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.training.weaterapp.ui.screens.Home
 import com.training.weaterapp.ui.theme.WeaterAppTheme
@@ -24,7 +25,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		enableEdgeToEdge()
+		enableEdgeToEdge(
+			statusBarStyle = SystemBarStyle.dark(scrim = Color.Transparent.hashCode()),
+		)
 		setContent {
 			WeaterAppTheme {
 				Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->

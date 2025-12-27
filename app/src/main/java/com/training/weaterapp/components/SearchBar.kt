@@ -22,6 +22,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -29,7 +31,7 @@ fun Search(
 	query: String,
 	onQueryChange: (String) -> Unit,
 	modifier: Modifier = Modifier,
-	placeholderText: String = "Ville"
+	placeholderText: String = "Ville ou aéroport"
 ) {
 
 	Column(modifier = modifier.fillMaxWidth()) {
@@ -55,7 +57,9 @@ fun Search(
 						value = query,
 						onValueChange = onQueryChange,
 						singleLine = true,
-						modifier = Modifier.fillMaxWidth().fillMaxHeight()
+						modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+						textStyle = TextStyle(color = MaterialTheme.colorScheme.primary),
+						cursorBrush = SolidColor(MaterialTheme.colorScheme.primary)
 					) { innerTextField ->
 						if (query.isEmpty()) {
 							Text(
