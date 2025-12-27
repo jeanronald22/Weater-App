@@ -1,4 +1,4 @@
-package com.training.weaterapp.domain.repository
+package com.training.weaterapp.domain.services
 
 import com.training.weaterapp.data.response.GeoCodingResponse
 import retrofit2.http.GET
@@ -14,5 +14,5 @@ interface GeoCodingAPI {
 	suspend fun searchCity(
 		@Query("name") name: String,
 		@Query("count") count: Int = 10
-	):GeoCodingResponse
+	): GeoCodingResponse
 }

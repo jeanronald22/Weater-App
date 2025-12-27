@@ -30,10 +30,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.training.weaterapp.R
 import com.training.weaterapp.components.EmptyList
 import com.training.weaterapp.components.Loader
 import com.training.weaterapp.components.city.CityCard
+import com.training.weaterapp.domain.model.Screen
 import com.training.weaterapp.ui.viewModel.HomViewModel
 import com.training.weatherapp.components.Search
 
@@ -41,7 +43,8 @@ import com.training.weatherapp.components.Search
 @Composable
 fun Home(
 	modifier: Modifier = Modifier,
-	viewModel: HomViewModel = hiltViewModel()
+	viewModel: HomViewModel = hiltViewModel(),
+	navController: NavController
 ) {
 	val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
@@ -100,7 +103,9 @@ fun Home(
 				}
 
 				else -> items(citiesState.data!!) { city ->
-					CityCard(item = city)
+					CityCard(item = city, onClick = {
+						navController.navigate("${Screen.WeatherDetail.route}/${city.latitude}/${city.longitude}/${city.name}")
+					})
 				}
 			}
 		}

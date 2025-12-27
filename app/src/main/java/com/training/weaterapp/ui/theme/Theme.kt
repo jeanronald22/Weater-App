@@ -14,18 +14,6 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-
-val LightColorScheme = lightColorScheme(
-	primary = Color(0xFF1F2937),
-	secondary = Color(0xFF6B7280),
-	background = Color(0xFFFFFFFF),
-	surface = Color(0xFFF5F7FA),
-	outline = Color(0xFFD1D5DB),
-	onPrimary = Color.White,
-	onBackground = Color(0xFF1F2937),
-	onSurface = Color(0xFF1F2937)
-)
-
 val DarkColorScheme = darkColorScheme(
 	primary = Color(0xFFF9FAFB),
 	secondary = Color(0xFF9CA3AF),

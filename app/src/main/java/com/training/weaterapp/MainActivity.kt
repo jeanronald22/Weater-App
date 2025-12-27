@@ -16,7 +16,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.training.weaterapp.domain.model.Screen
 import com.training.weaterapp.ui.screens.Home
+import com.training.weaterapp.ui.screens.WeatherDetail
 import com.training.weaterapp.ui.theme.WeaterAppTheme
 import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,11 +37,39 @@ class MainActivity : ComponentActivity() {
 		)
 		setContent {
 			WeaterAppTheme {
+				val navController = rememberNavController()
+
 				Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-					Home(modifier = Modifier.padding(innerPadding))
+					NavHost(
+						navController = navController,
+						startDestination = Screen.Home.route,
+						modifier = Modifier.padding(innerPadding)
+					) {
+						composable(Screen.Home.route) {
+							Home(navController = navController)
+						}
+
+						composable(
+							route = "${Screen.WeatherDetail.route}/{lat}/{lon}/{cityName}",
+							arguments = listOf(
+								navArgument("lat") { type = NavType.FloatType },
+								navArgument("lon") { type = NavType.FloatType },
+								navArgument("cityName") { type = NavType.StringType }
+							)
+						) { backStackEntry ->
+							val lat = backStackEntry.arguments?.getFloat("lat") ?: 0f
+							val lon = backStackEntry.arguments?.getFloat("lon") ?: 0f
+							val cityName = backStackEntry.arguments?.getString("cityName") ?: ""
+							WeatherDetail(
+								latitude = lat.toDouble(),
+								longitude = lon.toDouble(),
+								cityName = cityName,
+								navController
+							)
+						}
+					}
 				}
 			}
 		}
 	}
 }
-

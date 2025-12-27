@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -58,8 +59,8 @@ fun Search(
 						onValueChange = onQueryChange,
 						singleLine = true,
 						modifier = Modifier.fillMaxWidth().fillMaxHeight(),
-						textStyle = TextStyle(color = MaterialTheme.colorScheme.outline),
-						cursorBrush = SolidColor(MaterialTheme.colorScheme.outline)
+						textStyle = TextStyle(color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold),
+						cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
 					) { innerTextField ->
 						if (query.isEmpty()) {
 							Text(

@@ -1,7 +1,7 @@
 package com.training.weaterapp.di.modules
 
-import com.training.weaterapp.domain.repository.GeoCodingAPI
-import com.training.weaterapp.domain.repository.WeatherService
+import com.training.weaterapp.domain.services.GeoCodingAPI
+import com.training.weaterapp.domain.services.WeatherService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,18 +21,28 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 	@Provides
+	@GeocodingRetrofit
 	@Singleton
 	fun provideRetrofit(): Retrofit =
 		Retrofit.Builder().baseUrl("https://geocoding-api.open-meteo.com/")
 			.addConverterFactory(GsonConverterFactory.create())
 			.build()
 
+	@ForecastRetrofit
 	@Provides
 	@Singleton
-	fun provideWeatherService(retrofit: Retrofit): WeatherService =
+	fun provideForecastRetrofit(): Retrofit =
+		Retrofit.Builder()
+			.baseUrl("https://api.open-meteo.com/")
+			.addConverterFactory(GsonConverterFactory.create())
+			.build()
+
+	@Provides
+	@Singleton
+	fun provideWeatherService(@ForecastRetrofit retrofit: Retrofit): WeatherService =
 		retrofit.create(WeatherService::class.java)
 
 	@Provides
 	@Singleton
-	fun provideGeoCodingApi(retrofit: Retrofit): GeoCodingAPI = retrofit.create(GeoCodingAPI::class.java)
+	fun provideGeoCodingApi(@GeocodingRetrofit retrofit: Retrofit): GeoCodingAPI = retrofit.create(GeoCodingAPI::class.java)
 }

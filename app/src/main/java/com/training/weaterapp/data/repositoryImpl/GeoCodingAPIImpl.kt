@@ -1,8 +1,7 @@
 package com.training.weaterapp.data.repositoryImpl
 
 import com.training.weaterapp.data.response.CityResponse
-import com.training.weaterapp.data.response.GeoCodingResponse
-import com.training.weaterapp.domain.repository.GeoCodingAPI
+import com.training.weaterapp.domain.services.GeoCodingAPI
 import com.training.weaterapp.domain.repository.GeoCodingApiRepository
 import javax.inject.Inject
 
